@@ -58,15 +58,17 @@ const SyllableStepper: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [sentences, currentSentenceIndex, currentSyllableIndex]);
 
+  // If no data loaded yet
   if (sentences.length === 0) {
     return <p>Loading sentences...</p>;
   }
 
+  // Identify current sentence & syllable
   const currentSentence = sentences[currentSentenceIndex];
   const totalSyllables = currentSentence.flattenedSyllables.length;
   const currentSyllable = currentSentence.flattenedSyllables[currentSyllableIndex];
 
-  // Identify which word & syllable is current
+  // For highlighting the correct portion of each word
   const { wordIndex: currentWordIndex, syllIndex: currentWordSyllIndex } =
     currentSentence.mapping[currentSyllableIndex];
 
@@ -194,6 +196,4 @@ const SyllableStepper: React.FC = () => {
 };
 
 export default SyllableStepper;
-
-
 

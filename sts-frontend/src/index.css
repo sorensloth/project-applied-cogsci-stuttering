@@ -17,7 +17,6 @@ body {
   font-family: 'Fredoka', sans-serif;
 }
 
-
 h1 {
   margin-top: 2rem;
   font-size: 2.5rem;
@@ -41,6 +40,7 @@ h1 {
   color: #555;
 }
 
+/* Added from Soeren-branch */
 span:hover {
   width: 10em;
   height: 5ex;
@@ -76,5 +76,4 @@ button:active {
 button:focus {
   outline: none;
 }
-
 
