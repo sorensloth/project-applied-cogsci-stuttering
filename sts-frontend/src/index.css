@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  background: #f0f8ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  color: #222;
+}
+
+.lexend-font {
+  font-family: 'Lexend', sans-serif;
+}
+
+.fredoka-font {
+  font-family: 'Fredoka', sans-serif;
+}
+
+
+h1 {
+  margin-top: 2rem;
+  font-size: 2.5rem;
+  color: #1c3faa;
+}
+
+.syllable-box {
+  background: #fff5c2;
+  padding: 3rem 5rem;
+  border-radius: 2rem;
+  font-size: 4rem;
+  font-weight: bold;
+  margin-top: 3rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.syllable-count {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: #555;
+}
+
+span:hover {
+  width: 10em;
+  height: 5ex;
+  background-color: #f0f8ff;
+  border: 2px solid #1c3faa;
+  border-radius: 10px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: #1c3faa;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #1c3faa;
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+button:focus {
+  outline: none;
+}
+
+
