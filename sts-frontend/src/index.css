@@ -17,7 +17,6 @@ body {
   font-family: 'Fredoka', sans-serif;
 }
 
-
 h1 {
   margin-top: 2rem;
   font-size: 2.5rem;
@@ -40,3 +39,41 @@ h1 {
   font-size: 1.5rem;
   color: #555;
 }
+
+/* Added from Soeren-branch */
+span:hover {
+  width: 10em;
+  height: 5ex;
+  background-color: #f0f8ff;
+  border: 2px solid #1c3faa;
+  border-radius: 10px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  background: #1c3faa;
+  color: white;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #1c3faa;
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+button:focus {
+  outline: none;
+}
+
