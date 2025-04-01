@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface HeaderProps {
-  primaryColor: string;
-  accentColor: string;
-  textColor: string;
-}
+type HeaderProps = {
+  primaryColor?: string;
+};
 
 const Header: React.FC<HeaderProps> = ({ primaryColor = '#1c3faa' }) => {
   return (
@@ -17,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ primaryColor = '#1c3faa' }) => {
         top: 0,
         zIndex: 999,
         boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-        padding: '1.5rem 0',
+        padding: '2rem 0',
         margin: 0,
       }}
     >
@@ -59,3 +57,4 @@ const Header: React.FC<HeaderProps> = ({ primaryColor = '#1c3faa' }) => {
 };
 
 export default Header;
+

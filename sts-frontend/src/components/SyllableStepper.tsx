@@ -120,18 +120,18 @@ const SyllableStepper: React.FC = () => {
   return (
     <div style={{ textAlign: 'center' }}>
       {/* Syllable Count */}
-      <p style={{ marginBottom: '0.5rem' }}>
+      <p style={{ marginBottom: '1rem' }}>
         Syllable {currentSyllableIndex + 1} of {totalSyllables}
       </p>
 
       {/* Progress Bar */}
       <div
         style={{
-          width: '80%',
+          width: '40%',
           height: '10px',
           background: '#ddd',
           borderRadius: '5px',
-          margin: '1rem auto',
+          margin: '3rem auto',
           overflow: 'hidden',
         }}
       >
@@ -146,7 +146,7 @@ const SyllableStepper: React.FC = () => {
       </div>
 
       {/* Display the entire sentence as normal words */}
-      <div style={{ marginBottom: '2rem', fontSize: '1.5rem' }}>
+      <div style={{ marginBottom: '2rem', fontSize: '3rem' }}>
         {sentenceDisplay}
       </div>
 
@@ -156,16 +156,16 @@ const SyllableStepper: React.FC = () => {
           <motion.div
             key={currentSyllable}
             className="syllable-box"
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.02 }}
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               minHeight: '120px',
-              minWidth: '250px',
+              minWidth: '200px',
               textAlign: 'center',
             }}
           >
@@ -176,7 +176,7 @@ const SyllableStepper: React.FC = () => {
         {/* Restart Button */}
         <button
           style={{
-            marginTop: '2rem',
+            marginTop: '4rem',
             padding: '1rem 2rem',
             fontSize: '1rem',
             background: '#1c3faa',

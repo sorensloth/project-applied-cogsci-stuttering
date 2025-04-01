@@ -1,54 +1,30 @@
-import React, { useState } from 'react';
-import SyllableStepper from './components/SyllableStepper';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import AboutStuttering from './pages/AboutStuttering';
+import WhySTS from './pages/WhySTS';
+import STSPage from './pages/STSPage';
 
 const App = () => {
-  const [font, setFont] = useState<'lexend' | 'fredoka'>('lexend');
-
-  const toggleFont = () => {
-    setFont(prev => (prev === 'lexend' ? 'fredoka' : 'lexend'));
-  };
-
   return (
-    <div
-  className={font === 'lexend' ? 'lexend-font' : 'fredoka-font'}
-  style={{
-    minHeight: '100vh',
-    background: '#f0f8ff',
-    padding: '2rem 1rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxSizing: 'border-box',
-  }}
->
+    <Router>
+      {/* Full-width header */}
+      <Header />
 
-      <div style={{ maxWidth: '500px', width: '100%' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '1rem' }}>🗣️ STS Practice Tool</h1>
-
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-  <button
-    onClick={toggleFont}
-    style={{
-      marginBottom: '2rem',
-      padding: '0.6rem 1.2rem',
-      fontSize: '1rem',
-      background: '#ffb703',
-      color: '#000',
-      border: '2px solid #1c3faa',
-      borderRadius: '1rem',
-      cursor: 'pointer'
-    }}
-  >
-    Change Font: {font === 'lexend' ? 'Fredoka' : 'Lexend'}
-  </button>
-</div>
-
-
-        <SyllableStepper />
+      {/* This container is for page content, so it doesn't constrain the header */}
+      <div style={{ margin: 0, padding: 0, minHeight: '100vh' }}>
+        <Routes>
+          <Route path="/syllable-timed-speech" element={<STSPage />} />
+          <Route path="/about-stuttering" element={<AboutStuttering />} />
+          <Route path="/why-sts" element={<WhySTS />} />
+          {/* Default route - choose whichever page you like */}
+          <Route path="/" element={<AboutStuttering />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 };
 
 export default App;
+
+
