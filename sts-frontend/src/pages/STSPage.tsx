@@ -15,7 +15,7 @@ const STSPage: React.FC = () => {
       className={font === 'lexend' ? 'lexend-font' : 'fredoka-font'}
       style={{ textAlign: 'center', minHeight: '100vh' }}
     >
-      <h1 style={{ color: primaryColor, marginBottom: '1rem' }}>
+      <h1 style={{ color: primaryColor, marginTop: '3rem', marginBottom: '2rem' }}>
         🗣️ STS Practice Tool
       </h1>
 
