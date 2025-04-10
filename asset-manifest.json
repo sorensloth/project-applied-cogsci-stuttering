@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Project-Applied-CogSci-Stuttering/static/css/main.385e9914.css",
+    "main.js": "/Project-Applied-CogSci-Stuttering/static/js/main.3c237121.js",
+    "index.html": "/Project-Applied-CogSci-Stuttering/index.html",
+    "main.385e9914.css.map": "/Project-Applied-CogSci-Stuttering/static/css/main.385e9914.css.map",
+    "main.3c237121.js.map": "/Project-Applied-CogSci-Stuttering/static/js/main.3c237121.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.385e9914.css",
+    "static/js/main.3c237121.js"
+  ]
+}
