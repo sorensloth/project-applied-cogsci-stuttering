@@ -3,10 +3,10 @@ html, body {
   padding: 0;
   width: 100%;
   min-height: 100%;
-  background: #f0f8ff; /* If you want a light blue background site-wide */
+  background: #f0f8ff;
   box-sizing: border-box;
+  color: #2a3950;
 }
-
 
 .lexend-font {
   font-family: 'Lexend', sans-serif;
@@ -16,64 +16,122 @@ html, body {
   font-family: 'Fredoka', sans-serif;
 }
 
-
 h1 {
   margin-top: 2rem;
   font-size: 2.5rem;
-  color: #1c3faa;
+  color: #2a3950;
 }
 
-.syllable-box {
-  background: #fff5c2;
-  padding: 3rem 5rem;
-  border-radius: 2rem;
-  font-size: 4rem;
-  font-weight: bold;
-  margin-top: 3rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+.category-card {
+  cursor: pointer;
+  background-color: white;
+  border-radius: 16px;
+  padding: 1.8rem;
+  box-shadow: 0 8px 16px rgba(42, 57, 80, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  border: 1px solid rgba(42, 57, 80, 0.1);
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(42, 57, 80, 0.12);
 }
 
 .syllable-count {
   margin-top: 2rem;
   font-size: 1.5rem;
-  color: #555;
+  color: #2a3950;
 }
 
-span:hover {
-  width: 10em;
-  height: 5ex;
-  background-color: #f0f8ff;
-  border: 2px solid #1c3faa;
-  border-radius: 10px;
+/* Syllable hover effect */
+.syllable {
+  display: inline-block;
+  transition: all 0.2s ease;
+  padding: 0;
+  margin: 0;
+  border: 0px solid transparent;
+}
+
+.syllable:hover {
+  background-color: rgba(42, 57, 80, 0.05);
+  border: 2px solid #5c8adc;
+  border-radius: 6px;
   font-weight: bold;
-  color: black;
+  color: #2a3950;
   cursor: pointer;
+}
+
+/* Lined paper effect for syllable box */
+.lined-paper-box {
+  background-color: #fff;
+  background-image: 
+    linear-gradient(rgba(42, 57, 80, 0.08) 1px, transparent 1px);
+  background-size: 100% 2rem;
+  background-position: 0 1rem;
+  border: 1px solid rgba(42, 57, 80, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(42, 57, 80, 0.08);
+  padding: 2rem;
+  position: relative;
+  min-height: 6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: rgba(42, 57, 80, 0.05);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #2a3950;
+  padding: 0.5rem;
+  margin: 0;
+  line-height: 1;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.close-button:hover {
+  background: rgba(42, 57, 80, 0.1);
+  color: #5c8adc;
+  transform: none;
 }
 
 button {
   margin-top: 2rem;
   padding: 1rem 2rem;
   font-size: 1.5rem;
-  background: #1c3faa;
+  background: #5c8adc;
   color: white;
   border: none;
-  border-radius: 1rem;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(92, 138, 220, 0.2);
 }
 
 button:hover {
-  background: #1c3faa;
-  transform: scale(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(92, 138, 220, 0.25);
+  background: #4a7fd8;
 }
 
 button:active {
-  transform: scale(0.9);
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(92, 138, 220, 0.15);
 }
 
 button:focus {
   outline: none;
+  box-shadow: 0 0 0 3px rgba(92, 138, 220, 0.3);
 }
 
 

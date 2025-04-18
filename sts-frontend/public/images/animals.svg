@@ -1,0 +1,11 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="240" fill="#f0f0f0"/>
+  <circle cx="120" cy="120" r="60" fill="#1c3faa"/>
+  <!-- Cat head -->
+  <circle cx="120" cy="120" r="30" fill="white"/>
+  <!-- Cat ears -->
+  <path d="M100 95 L110 110 L120 95 Z" fill="white"/>
+  <path d="M120 95 L130 110 L140 95 Z" fill="white"/>
+  <!-- Cat whiskers -->
+  <path d="M90 120 L110 120 M90 125 L110 125 M130 120 L150 120 M130 125 L150 125" stroke="white" stroke-width="2"/>
+</svg> 

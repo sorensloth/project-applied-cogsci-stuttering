@@ -1,55 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import { loadSentencesFromCSV, Sentence } from '../utils/parseCSV';
+import { Sentence } from '../utils/parseCSV';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const SyllableStepper: React.FC = () => {
-  const [sentences, setSentences] = useState<Sentence[]>([]);
+interface SyllableStepperProps {
+  sentences: Sentence[];
+  selectedCategory: string;
+  onBackToCategories: () => void; // callback to go back
+  onOpenInstructions: () => void;  // Add this prop
+}
+
+const SyllableStepper: React.FC<SyllableStepperProps> = ({
+  sentences,
+  selectedCategory,
+  onBackToCategories,
+  onOpenInstructions,
+}) => {
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
   const [currentSyllableIndex, setCurrentSyllableIndex] = useState(0);
+  const [showSyllableBox, setShowSyllableBox] = useState(true);
 
-  // Load CSV once
-  useEffect(() => {
-    fetch('/STS_practice_sentences.csv')
-      .then(res => res.text())
-      .then(text => {
-        const result = loadSentencesFromCSV(text);
-        setSentences(result);
-      });
-  }, []);
-
-  // Moves to the next syllable (or next sentence if at end)
+  // Go forward one syllable (or next sentence)
   const nextSyllable = () => {
-    const sentence = sentences[currentSentenceIndex];
-    if (!sentence) return;
+    const current = sentences[currentSentenceIndex];
+    if (!current) return;
 
-    if (currentSyllableIndex < sentence.flattenedSyllables.length - 1) {
-      setCurrentSyllableIndex(prev => prev + 1);
-    } else if (currentSentenceIndex < sentences.length - 1) {
-      // Move to next sentence, start at syllable 0
-      setCurrentSentenceIndex(prev => prev + 1);
-      setCurrentSyllableIndex(0);
+    if (currentSyllableIndex < current.flattenedSyllables.length - 1) {
+      setCurrentSyllableIndex((prev) => prev + 1);
+    } else {
+      // Next sentence if available
+      if (currentSentenceIndex < sentences.length - 1) {
+        setCurrentSentenceIndex((prev) => prev + 1);
+        setCurrentSyllableIndex(0);
+      }
     }
   };
 
-  // Moves one syllable back (no crossing into previous sentence)
+  // Go backward one syllable (no crossing sentence boundaries)
   const prevSyllable = () => {
     if (currentSyllableIndex > 0) {
-      setCurrentSyllableIndex(prev => prev - 1);
+      setCurrentSyllableIndex((prev) => prev - 1);
     }
-    // If you'd like to jump to the previous sentence's last syllable, 
-    // you could do that here instead.
   };
 
-  // Handle keyboard input
+  // Keyboard controls: Space / Right Arrow → next, Left Arrow → prev
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      // Right Arrow or Space = next
       if (e.code === 'ArrowRight' || e.code === 'Space') {
         e.preventDefault();
         nextSyllable();
-      }
-      // Left Arrow = previous
-      else if (e.code === 'ArrowLeft') {
+      } else if (e.code === 'ArrowLeft') {
         e.preventDefault();
         prevSyllable();
       }
@@ -63,48 +62,48 @@ const SyllableStepper: React.FC = () => {
   }
 
   const currentSentence = sentences[currentSentenceIndex];
-  const totalSyllables = currentSentence.flattenedSyllables.length;
   const currentSyllable = currentSentence.flattenedSyllables[currentSyllableIndex];
+  const totalSyllables = currentSentence.flattenedSyllables.length;
 
-  // Identify which word & syllable is current
-  const { wordIndex: currentWordIndex, syllIndex: currentWordSyllIndex } =
-    currentSentence.mapping[currentSyllableIndex];
-
-  // Build the entire sentence display
+  // We'll highlight the entire sentence, only the current syllable is bold black
+  // completed syllables in green, future in dark gray
   const sentenceDisplay = currentSentence.words.map((wordData, wIdx) => {
     const { word, syllables } = wordData;
+
+    // Calculate how many syllables come before this word to find global indices
     const syllablesBeforeThisWord = currentSentence.words
       .slice(0, wIdx)
       .reduce((acc, wd) => acc + wd.syllables.length, 0);
 
-    // Render each syllable in the word with color logic
+    // Build a <span> array for each syllable
     const partedWord = syllables.map((syll, i) => {
       const globalSyllIndex = syllablesBeforeThisWord + i;
+
       if (globalSyllIndex < currentSyllableIndex) {
-        // Completed syllable
+        // Completed syllables
         return (
-          <span style={{ color: 'green' }} key={i}>
+          <span className="syllable" style={{ color: 'green' }} key={i}>
             {syll}
           </span>
         );
       } else if (globalSyllIndex === currentSyllableIndex) {
         // Current syllable
         return (
-          <span style={{ fontWeight: 'bold', color: '#000' }} key={i}>
+          <span className="syllable" style={{ fontWeight: 'bold', color: '#000' }} key={i}>
             {syll}
           </span>
         );
       } else {
-        // Future syllable
+        // Future syllables
         return (
-          <span style={{ color: 'rgba(0,0,0,0.5)' }} key={i}>
+          <span className="syllable" style={{ color: 'rgba(0,0,0,0.5)' }} key={i}>
             {syll}
           </span>
         );
       }
     });
 
-    // Join the syllables so they appear as a single word (with no space/hyphen in between)
+    // Combine partedWord array into a single "word" visually
     return (
       <span key={wIdx} style={{ marginRight: '0.7rem' }}>
         {partedWord}
@@ -112,24 +111,89 @@ const SyllableStepper: React.FC = () => {
     );
   });
 
-  // Progress bar ratio
+  // For the progress bar
   const progressRatio = (currentSyllableIndex + 1) / totalSyllables;
 
+  let categoryName = '';
+  if (selectedCategory === 'SportAndPlay') {
+    categoryName = 'Sport & Leg';
+  } else if (selectedCategory === 'Food') {
+    categoryName = 'Mad';
+  } else if (selectedCategory === 'Animals') {
+    categoryName = 'Dyr';
+  } else if (selectedCategory === 'Weather') {
+    categoryName = 'Vejr';
+  }
+
   return (
-    <div style={{ textAlign: 'center' }}>
-      {/* Syllable Count */}
-      <p style={{ marginBottom: '1rem' }}>
-        Syllable {currentSyllableIndex + 1} of {totalSyllables}
-      </p>
+    <div style={{ textAlign: 'center', padding: '2rem' }}>
+      {/* Navigation buttons container */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '1rem'
+      }}>
+        {/* Back button */}
+        <button
+          onClick={onBackToCategories}
+          style={{
+            padding: '0.5rem 1rem',
+            margin: 0,
+            background: 'rgba(92, 138, 220, 0.1)',
+            border: '1px solid rgba(92, 138, 220, 0.2)',
+            borderRadius: '0.5rem',
+            cursor: 'pointer',
+            fontSize: '1.5rem',
+            color: '#5c8adc',
+            boxShadow: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          ← Tilbage
+        </button>
+
+        {/* Info button */}
+        <button
+          onClick={onOpenInstructions}
+          style={{
+            padding: '0.5rem 1rem',
+            margin: 0,
+            background: 'rgba(92, 138, 220, 0.1)',
+            border: '1px solid rgba(92, 138, 220, 0.2)',
+            borderRadius: '0.5rem',
+            cursor: 'pointer',
+            fontSize: '1.5rem',
+            color: '#5c8adc',
+            boxShadow: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          <span style={{ fontSize: '1.2rem' }}>ℹ️</span>
+          Instruktioner
+        </button>
+      </div>
+
+      <h2 style={{ marginBottom: '1rem' }}>
+        Kategori: {categoryName} | Niveau af sværhedsgrad: {currentSentence.level}
+      </h2>
+
+       {/* Full sentence display */}
+      <div style={{ marginBottom: '2rem', fontSize: '2.5rem', marginTop: '4rem' }}>{sentenceDisplay}</div>
 
       {/* Progress Bar */}
       <div
         style={{
-          width: '40%',
-          height: '10px',
+          width: '30%',
+          height: '6px',
           background: '#ddd',
-          borderRadius: '5px',
-          margin: '3rem auto',
+          borderRadius: '3px',
+          margin: '1rem auto',
+          marginBottom: '1rem',
           overflow: 'hidden',
         }}
       >
@@ -143,57 +207,83 @@ const SyllableStepper: React.FC = () => {
         />
       </div>
 
-      {/* Display the entire sentence as normal words */}
-      <div style={{ marginBottom: '2rem', fontSize: '3rem' }}>
-        {sentenceDisplay}
-      </div>
+      {/* Syllable counter */}
+      <p style={{ marginBottom: '2rem', fontSize: '1.3rem' }}>
+        Stavelse {currentSyllableIndex + 1} ud af {totalSyllables}
+      </p>
 
-      {/* Animated Syllable Box (still showing the current syllable) */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSyllable}
-            className="syllable-box"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.02 }}
+      {/* Syllable box or reopen button */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '150px' }}>
+        {showSyllableBox ? (
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSyllable}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.05 }}
+              className="lined-paper-box"
+              style={{
+                width: '20%',
+                maxWidth: '200px',
+              }}
+            >
+              <button
+                className="close-button"
+                onClick={() => setShowSyllableBox(false)}
+                aria-label="Close syllable box"
+              >
+                ×
+              </button>
+              <span style={{ fontSize: '4rem'}}>
+                {currentSyllable}
+              </span>
+            </motion.div>
+          </AnimatePresence>
+        ) : (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            onClick={() => setShowSyllableBox(true)}
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: '120px',
-              minWidth: '200px',
-              textAlign: 'center',
+              marginTop: 0,
+              padding: '0.5rem 1rem',
+              fontSize: '1rem',
+              background: '#f0f8ff',
+              color: '#1c3faa',
+              border: '1px solid #1c3faa',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
             }}
           >
-            {currentSyllable}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Restart Button */}
-        <button
-          style={{
-            marginTop: '4rem',
-            padding: '1rem 2rem',
-            fontSize: '1rem',
-            background: '#1c3faa',
-            color: 'white',
-            border: 'none',
-            borderRadius: '1rem',
-            cursor: 'pointer',
-            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-          }}
-          onClick={() => setCurrentSyllableIndex(0)}
-        >
-          🔁 Restart Sentence
-        </button>
+            Vis stavelse
+          </motion.button>
+        )}
       </div>
+
+      {/* Next Syllable Button */}
+      <button
+        onClick={nextSyllable}
+        style={{
+          marginTop: '2rem',
+          padding: '1rem 2rem',
+          fontSize: '1.5rem',
+          background: '#1c3faa',
+          color: 'white',
+          border: 'none',
+          borderRadius: '1rem',
+          cursor: 'pointer',
+        }}
+      >
+        Næste stavelse
+      </button>
     </div>
   );
 };
 
 export default SyllableStepper;
+
+
 
 
 
