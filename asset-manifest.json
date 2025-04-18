@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/project-applied-cogsci-stuttering/static/css/main.385e9914.css",
-    "main.js": "/project-applied-cogsci-stuttering/static/js/main.3372ded6.js",
+    "main.css": "/project-applied-cogsci-stuttering/static/css/main.a36b0ef0.css",
+    "main.js": "/project-applied-cogsci-stuttering/static/js/main.8ab2faab.js",
     "index.html": "/project-applied-cogsci-stuttering/index.html",
-    "main.385e9914.css.map": "/project-applied-cogsci-stuttering/static/css/main.385e9914.css.map",
-    "main.3372ded6.js.map": "/project-applied-cogsci-stuttering/static/js/main.3372ded6.js.map"
+    "main.a36b0ef0.css.map": "/project-applied-cogsci-stuttering/static/css/main.a36b0ef0.css.map",
+    "main.8ab2faab.js.map": "/project-applied-cogsci-stuttering/static/js/main.8ab2faab.js.map"
   },
   "entrypoints": [
-    "static/css/main.385e9914.css",
-    "static/js/main.3372ded6.js"
+    "static/css/main.a36b0ef0.css",
+    "static/js/main.8ab2faab.js"
   ]
 }

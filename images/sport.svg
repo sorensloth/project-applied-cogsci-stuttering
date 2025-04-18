@@ -1,0 +1,8 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="240" fill="#f0f0f0"/>
+  <circle cx="120" cy="120" r="60" fill="#1c3faa"/>
+  <!-- Soccer ball pattern -->
+  <path d="M120 70 A50 50 0 0 1 170 120 A50 50 0 0 1 120 170 A50 50 0 0 1 70 120 A50 50 0 0 1 120 70" fill="white"/>
+  <path d="M120 80 L120 160 M80 120 L160 120" stroke="#1c3faa" stroke-width="4"/>
+  <path d="M100 90 L140 90 M100 150 L140 150 M90 100 L90 140 M150 100 L150 140" stroke="#1c3faa" stroke-width="2"/>
+</svg> 

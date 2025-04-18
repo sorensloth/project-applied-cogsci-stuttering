@@ -1,0 +1,10 @@
+<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="240" fill="#f0f0f0"/>
+  <circle cx="120" cy="120" r="60" fill="#1c3faa"/>
+  <!-- Plate -->
+  <circle cx="120" cy="120" r="40" fill="white"/>
+  <!-- Fork -->
+  <path d="M90 100 L90 140 M85 100 L85 120 M95 100 L95 120" stroke="white" stroke-width="3"/>
+  <!-- Knife -->
+  <path d="M150 100 L150 140 M145 100 C145 110 155 110 155 100" stroke="white" stroke-width="3"/>
+</svg> 
