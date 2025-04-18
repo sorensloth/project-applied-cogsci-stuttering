@@ -42,20 +42,19 @@ const SyllableStepper: React.FC<SyllableStepperProps> = ({
     }
   };
 
-  // Keyboard controls: Space / Right Arrow → next, Left Arrow → prev
+  // Add event listeners for keyboard navigation
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.code === 'ArrowRight' || e.code === 'Space') {
-        e.preventDefault();
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
         nextSyllable();
-      } else if (e.code === 'ArrowLeft') {
-        e.preventDefault();
+      } else if (e.key === 'ArrowLeft') {
         prevSyllable();
       }
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [sentences, currentSentenceIndex, currentSyllableIndex]);
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSyllable, prevSyllable]);
 
   if (sentences.length === 0) {
     return <p>Loading sentences...</p>;
