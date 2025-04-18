@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Sentence } from '../utils/parseCSV';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -20,7 +20,7 @@ const SyllableStepper: React.FC<SyllableStepperProps> = ({
   const [showSyllableBox, setShowSyllableBox] = useState(true);
 
   // Go forward one syllable (or next sentence)
-  const nextSyllable = () => {
+  const nextSyllable = useCallback(() => {
     const current = sentences[currentSentenceIndex];
     if (!current) return;
 
@@ -33,14 +33,14 @@ const SyllableStepper: React.FC<SyllableStepperProps> = ({
         setCurrentSyllableIndex(0);
       }
     }
-  };
+  }, [sentences, currentSentenceIndex, currentSyllableIndex]);
 
   // Go backward one syllable (no crossing sentence boundaries)
-  const prevSyllable = () => {
+  const prevSyllable = useCallback(() => {
     if (currentSyllableIndex > 0) {
       setCurrentSyllableIndex((prev) => prev - 1);
     }
-  };
+  }, [currentSyllableIndex]);
 
   // Add event listeners for keyboard navigation
   useEffect(() => {
@@ -67,7 +67,7 @@ const SyllableStepper: React.FC<SyllableStepperProps> = ({
   // We'll highlight the entire sentence, only the current syllable is bold black
   // completed syllables in green, future in dark gray
   const sentenceDisplay = currentSentence.words.map((wordData, wIdx) => {
-    const { word, syllables } = wordData;
+    const { syllables } = wordData;
 
     // Calculate how many syllables come before this word to find global indices
     const syllablesBeforeThisWord = currentSentence.words
