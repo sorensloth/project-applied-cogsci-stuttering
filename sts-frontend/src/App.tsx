@@ -17,8 +17,8 @@ const App = () => {
           <Route path="/syllable-timed-speech" element={<STSPage />} />
           <Route path="/about-stuttering" element={<AboutStuttering />} />
           <Route path="/why-sts" element={<WhySTS />} />
-          {/* Default route - choose whichever page you like */}
-          <Route path="/" element={<AboutStuttering />} />
+          {/* Default route - now points to the syllable-timed speech page */}
+          <Route path="/" element={<STSPage />} />
         </Routes>
       </div>
     </Router>
